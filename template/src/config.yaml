@@ -1,0 +1,68 @@
+site:
+  name: __SITE_NAME__
+  statement: Research, synthesize, and publish source-backed knowledge packs.
+  siteUrl: __SITE_URL__
+  githubRepository: __REPOSITORY_URL__
+  discordLink: __DISCORD_URL__
+  headerMenu:
+    - label: Research
+      items:
+        - label: Research Brief
+          href: /knowledge/research-brief/
+        - label: Questions
+          href: /questions/
+        - label: Notes
+          href: /notes/
+    - label: Publish
+      items:
+        - label: Books
+          href: /books/
+        - label: Knowledge Packs
+          href: /knowledge-packs/
+  footerMenu:
+    - label: Project
+      items:
+        - label: Repository
+          href: __REPOSITORY_URL__
+  forms:
+    apiBaseUrl: /api/form/submit
+  emailNotifications:
+    contactRouting:
+      default:
+        - __CONTACT_EMAIL__
+    subscribeRecipients:
+      - __CONTACT_EMAIL__
+  summary: __SITE_NAME__ is a TreeSeed research project for building a durable body of knowledge.
+  projectStage: Research starter
+  projectStageDetail: Generated from the TreeSeed research starter template.
+models:
+  pages:
+    defaults:
+      pageLayout: article
+      stage: starter
+      audience: []
+  docs:
+    defaults:
+      tags: []
+  notes:
+    defaults:
+      author: research-steward
+      draft: false
+      tags: []
+  questions:
+    defaults:
+      draft: false
+      tags: []
+  objectives:
+    defaults:
+      draft: false
+      tags: []
+  proposals:
+    defaults:
+      draft: false
+      tags: []
+  decisions:
+    defaults:
+      draft: false
+      tags: []
+

@@ -1,0 +1,36 @@
+---
+name: Knowledge Optimizer Agent
+slug: knowledge-optimizer-agent
+handler: knowledge_optimizer
+enabled: true
+description: Improves clarity, structure, and reuse of generated knowledge.
+summary: Keeps the knowledge base coherent as it grows.
+operator: research-steward
+runtimeStatus: active
+capabilities: [editing, optimization]
+tags: [agent, knowledge]
+systemPrompt: |
+  You are the Knowledge Optimizer Agent. Improve generated knowledge for clarity, structure, and downstream packaging.
+persona: Editorial and systems-minded.
+triggers:
+  - type: message
+    messageTypes: [knowledge_generated]
+permissions:
+  - model: knowledge
+    operations: [search, get, update]
+  - model: message
+    operations: [create]
+execution:
+  maxConcurrency: 1
+  timeoutSeconds: 900
+  cooldownSeconds: 60
+  leaseSeconds: 300
+  retryLimit: 3
+  branchPrefix: knowledge-optimizer
+outputs:
+  messageTypes: [knowledge_optimized]
+  modelMutations: [knowledge:update, message:create]
+---
+
+The optimizer prevents research output from becoming a pile of disconnected notes.
+

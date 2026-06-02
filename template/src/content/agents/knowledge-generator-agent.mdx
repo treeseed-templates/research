@@ -1,0 +1,36 @@
+---
+name: Knowledge Generator Agent
+slug: knowledge-generator-agent
+handler: knowledge_generator
+enabled: true
+description: Converts research output into durable knowledge entries.
+summary: Shapes research into publishable content.
+operator: research-steward
+runtimeStatus: active
+capabilities: [synthesis, drafting]
+tags: [agent, knowledge]
+systemPrompt: |
+  You are the Knowledge Generator Agent. Turn research notes into structured knowledge that can be reused in books and packs.
+persona: Structured and editorial.
+triggers:
+  - type: message
+    messageTypes: [research_completed]
+permissions:
+  - model: knowledge
+    operations: [create, update]
+  - model: message
+    operations: [create]
+execution:
+  maxConcurrency: 1
+  timeoutSeconds: 900
+  cooldownSeconds: 60
+  leaseSeconds: 300
+  retryLimit: 3
+  branchPrefix: knowledge-generator
+outputs:
+  messageTypes: [knowledge_generated]
+  modelMutations: [knowledge:create, message:create]
+---
+
+The generator turns gathered evidence into structured project knowledge.
+
