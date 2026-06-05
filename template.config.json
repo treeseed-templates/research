@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "starter-research",
+  "id": "research",
   "displayName": "TreeSeed Research",
   "description": "First-party TreeSeed starter for freestanding research projects and knowledge-pack publishing.",
   "category": "starter",
