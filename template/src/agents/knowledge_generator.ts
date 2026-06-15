@@ -1,2 +1,1 @@
-export { knowledgeGeneratorHandler } from '@treeseed/agent';
-
+export { knowledgeGeneratorHandler } from './_project-handlers';

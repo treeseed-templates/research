@@ -27,10 +27,16 @@ execution:
   leaseSeconds: 300
   retryLimit: 3
   branchPrefix: knowledge-optimizer
+  requiresApprovedWork: true
+  contextSource: treedx
+  contextFormat: mdx
+  contextInjection: rendered-file-content
+  audit:
+    capture: [prompt, context, response, toolLog, changedFiles, capacityEnvelope, treeDxVerification]
+    redact: [secrets, credentials]
 outputs:
   messageTypes: [knowledge_optimized]
   modelMutations: [knowledge:update, message:create]
 ---
 
 The optimizer prevents research output from becoming a pile of disconnected notes.
-

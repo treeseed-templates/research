@@ -27,10 +27,16 @@ execution:
   leaseSeconds: 300
   retryLimit: 3
   branchPrefix: knowledge-generator
+  requiresApprovedWork: true
+  contextSource: treedx
+  contextFormat: mdx
+  contextInjection: rendered-file-content
+  audit:
+    capture: [prompt, context, response, toolLog, changedFiles, capacityEnvelope, treeDxVerification]
+    redact: [secrets, credentials]
 outputs:
   messageTypes: [knowledge_generated]
   modelMutations: [knowledge:create, message:create]
 ---
 
 The generator turns gathered evidence into structured project knowledge.
-

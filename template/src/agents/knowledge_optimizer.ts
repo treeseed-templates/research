@@ -1,2 +1,1 @@
-export { knowledgeOptimizerHandler } from '@treeseed/agent';
-
+export { knowledgeOptimizerHandler } from './_project-handlers';
