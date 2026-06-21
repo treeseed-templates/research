@@ -1,6 +1,6 @@
 # Agent Contract Test Report
 
-Generated: 2026-06-21T21:25:21.476Z
+Generated: 2026-06-21T21:49:52.635Z
 Repository: /home/adrian/Projects/treeseed/market/.treeseed/worktrees/demo-2a97516c35/starters/research/template
 Status: PASS
 
