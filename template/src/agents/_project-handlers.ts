@@ -18,7 +18,11 @@ function completed(summary: string, metadata: Record<string, unknown> = {}): Age
   return { status: 'completed', summary, metadata };
 }
 
-function createSecureHandler(kind: string, messageType: string, verb: string): AgentHandler<Inputs, Result> {
+function firstOutputMessage(context: Parameters<AgentHandler<Inputs, Result>['resolveInputs']>[0], fallback: string) {
+	return context.agent.outputs.messageTypes[0] ?? fallback;
+}
+
+function createSecureHandler(kind: string, fallbackMessageType: string, verb: string): AgentHandler<Inputs, Result> {
   return {
     kind,
     async resolveInputs(context) {
@@ -31,13 +35,14 @@ function createSecureHandler(kind: string, messageType: string, verb: string): A
       const objective = inputs.objective ?? 'No core objective was available to the project-owned research handler.';
       return {
         ...inputs,
-        messageType,
+        messageType: fallbackMessageType,
         summary: `${verb} for objective: ${objective}`,
       };
     },
     async emitOutputs(context, result) {
+      const messageType = firstOutputMessage(context, result.messageType);
       await context.sdk.createMessage({
-        type: result.messageType,
+        type: messageType,
         payload: {
           objective: result.objective,
           triggerKind: result.triggerKind,
@@ -59,8 +64,6 @@ function createSecureHandler(kind: string, messageType: string, verb: string): A
   };
 }
 
-export const plannerHandler = createSecureHandler('planner', 'question_priority_updated', 'Prepared research planning proposal');
-export const researcherHandler = createSecureHandler('researcher', 'research_completed', 'Prepared source-gathering proposal');
-export const knowledgeGeneratorHandler = createSecureHandler('knowledge_generator', 'knowledge_generated', 'Prepared knowledge-structure proposal');
-export const knowledgeOptimizerHandler = createSecureHandler('knowledge_optimizer', 'knowledge_optimized', 'Prepared knowledge optimization proposal');
-export const reporterHandler = createSecureHandler('reporter', 'report_created', 'Prepared research progress report');
+export const planHandler = createSecureHandler('plan', 'question_priority_updated', 'Prepared research planning proposal');
+export const researchHandler = createSecureHandler('research', 'research_completed', 'Prepared source-gathering proposal');
+export const reportHandler = createSecureHandler('report', 'report_created', 'Prepared research report');

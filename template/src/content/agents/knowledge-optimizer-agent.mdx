@@ -1,7 +1,12 @@
 ---
 name: Knowledge Optimizer Agent
 slug: knowledge-optimizer-agent
-handler: knowledge_optimizer
+handler: report
+projectAgentClassId: knowledge
+projectAgentClassSlug: knowledge
+handlerConfig:
+  workPackageKind: report
+  domain: knowledge_optimization
 enabled: true
 description: Improves clarity, structure, and reuse of generated knowledge.
 summary: Keeps the knowledge base coherent as it grows.
@@ -19,8 +24,35 @@ permissions:
   - model: knowledge
     operations: [search, get, update]
   - model: message
-    operations: [create]
+    operations: [create, pick, update]
+context:
+  queries:
+    - id: knowledge-optimizer-agent-treedx-context
+      purpose: generate
+      query: research note source map knowledge draft optimization uncertainty packaging readiness
+      scope: /
+      codeScopes:
+        - src/content
+        - docs
+      relations:
+        - references
+        - related
+      depth: 2
+      budget: 12
+      format: summary
 execution:
+  provider: codex
+  model: gpt-5.5
+  approvalPolicy: never
+  sandboxMode: read_only
+  reasoningEffort: medium
+  providerProfile:
+    requiredCapabilities:
+      - reasoning
+      - treedx_context
+      - knowledge_drafting
+      - source_map
+    fallbackPolicy: require_same_model_class
   maxConcurrency: 1
   timeoutSeconds: 900
   cooldownSeconds: 60
@@ -37,6 +69,11 @@ execution:
 outputs:
   messageTypes: [knowledge_optimized]
   modelMutations: [knowledge:update, message:create]
+governance:
+  mutationClass: draft_or_optimization
+  approvalRequiredForCanonicalContent: true
+  approvalRequiredForCode: false
+  requireHumanApproval: false
 ---
 
 The optimizer prevents research output from becoming a pile of disconnected notes.

@@ -1,7 +1,12 @@
 ---
 name: Knowledge Generator Agent
 slug: knowledge-generator-agent
-handler: knowledge_generator
+handler: report
+projectAgentClassId: knowledge
+projectAgentClassSlug: knowledge
+handlerConfig:
+  workPackageKind: report
+  domain: knowledge_draft
 enabled: true
 description: Converts research output into durable knowledge entries.
 summary: Shapes research into publishable content.
@@ -19,8 +24,35 @@ permissions:
   - model: knowledge
     operations: [create, update]
   - model: message
-    operations: [create]
+    operations: [create, pick, update]
+context:
+  queries:
+    - id: knowledge-generator-agent-treedx-context
+      purpose: generate
+      query: research note source map knowledge draft optimization uncertainty packaging readiness
+      scope: /
+      codeScopes:
+        - src/content
+        - docs
+      relations:
+        - references
+        - related
+      depth: 2
+      budget: 12
+      format: summary
 execution:
+  provider: codex
+  model: gpt-5.5
+  approvalPolicy: never
+  sandboxMode: read_only
+  reasoningEffort: medium
+  providerProfile:
+    requiredCapabilities:
+      - reasoning
+      - treedx_context
+      - knowledge_drafting
+      - source_map
+    fallbackPolicy: require_same_model_class
   maxConcurrency: 1
   timeoutSeconds: 900
   cooldownSeconds: 60
@@ -37,6 +69,11 @@ execution:
 outputs:
   messageTypes: [knowledge_generated]
   modelMutations: [knowledge:create, message:create]
+governance:
+  mutationClass: draft_or_optimization
+  approvalRequiredForCanonicalContent: true
+  approvalRequiredForCode: false
+  requireHumanApproval: false
 ---
 
 The generator turns gathered evidence into structured project knowledge.
