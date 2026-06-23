@@ -1,9 +1,12 @@
 site:
+  logo:
+    src: /logo.svg
+    alt: __SITE_NAME__ logo
   name: __SITE_NAME__
   statement: Research, synthesize, and publish source-backed knowledge packs.
-  siteUrl: __SITE_URL__
-  githubRepository: __REPOSITORY_URL__
-  discordLink: __DISCORD_URL__
+  siteUrl: https://example.com
+  githubRepository: https://github.com/example/research
+  discordLink: https://discord.gg/example
   headerMenu:
     - label: Research
       items:
@@ -23,15 +26,15 @@ site:
     - label: Project
       items:
         - label: Repository
-          href: __REPOSITORY_URL__
+          href: https://github.com/example/research
   forms:
     apiBaseUrl: /api/form/submit
   emailNotifications:
     contactRouting:
       default:
-        - __CONTACT_EMAIL__
+        - hello@example.com
     subscribeRecipients:
-      - __CONTACT_EMAIL__
+      - hello@example.com
   summary: __SITE_NAME__ is a TreeSeed research project for building a durable body of knowledge.
   projectStage: Research starter
   projectStageDetail: Generated from the TreeSeed research starter template.
@@ -65,4 +68,3 @@ models:
     defaults:
       draft: false
       tags: []
-
