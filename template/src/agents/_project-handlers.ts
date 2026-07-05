@@ -66,6 +66,8 @@ function createSecureHandler(kind: string, fallbackMessageType: string, verb: st
   };
 }
 
-export const planHandler = createSecureHandler('plan', 'question_priority_updated', 'Prepared research planning proposal');
-export const researchHandler = createSecureHandler('research', 'research_completed', 'Prepared source-gathering proposal');
-export const reportHandler = createSecureHandler('report', 'report_created', 'Prepared research report');
+export const writerHandler = createSecureHandler('writer', 'agent_note_created', 'Prepared research planning proposal');
+export const estimateHandler = createSecureHandler('estimate', 'agent_estimate_created', 'Prepared source-gathering proposal');
+export const reporterHandler = createSecureHandler('reporter', 'workday_report_created', 'Prepared research report');
+export const actorHandler = createSecureHandler('actor', 'agent_assignment_waiting', 'Prepared actor output');
+export const releaserHandler = createSecureHandler('releaser', 'release_readiness_created', 'Prepared release output');
