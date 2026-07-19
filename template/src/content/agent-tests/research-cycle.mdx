@@ -1,8 +1,45 @@
 ---
 id: research-cycle
 agent: researcher
-kind: message_chain
+kind: workday
 fixture: src/content/questions/what-should-this-research-map-first.mdx
+trigger:
+  workflowKind: research-citation-review
+  question: what-should-this-research-map-first
+  sourcePolicy: source-quality-criteria
+  minimumIndependentSources: 2
+  requireUnsupportedClaimRevision: true
+  finalArtifactModel: knowledge
+expect:
+  requiredAgents:
+    - researcher
+    - reviewer
+    - technical-writer
+    - reporter
+  requiredArtifacts:
+    - linked_note:evidence
+    - linked_note:citation-review
+    - knowledge_update
+    - workday_report
+  requiredSequence:
+    - question-decomposition
+    - source-selection-criteria
+    - governed-source-search
+    - independent-source-fetch
+    - linked-evidence-notes
+    - claim-synthesis
+    - citation-review-rejection
+    - revision
+    - citation-review-approval
+    - cited-knowledge-publication
+    - workday-report
+  assertions:
+    - every content read and mutation uses an assignment-scoped TreeDX operation
+    - at least two independent credible sources are captured when the question permits
+    - every material claim maps to one or more citation records
+    - unsupported claims cause review failure and revision before publication
+    - the final knowledge artifact links its question, evidence notes, and citation review
+    - the report includes assignment, mode-run, provider, usage, and artifact references
 ---
 
-The researcher should accept a prioritized question and produce source-backed synthesis.
+Run the real provider, assignment, kernel, TreeDX, evidence, review, revision, publication, usage, and settlement path. The workflow passes only when a prioritized question produces cited, reviewed knowledge and a traceable report without direct filesystem content mutation.

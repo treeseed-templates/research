@@ -6,14 +6,14 @@ name: Reporter
 agentClass: reporting
 projectAgentClassId: reporting
 projectAgentClassSlug: reporting
-template: engineering-agent/reporter
+template: research-agent/reporter
 enabled: true
 description: Deterministically summarizes workdays, capacity, blockers, and outcomes.
 summary: Deterministically summarizes workdays, capacity, blockers, and outcomes.
 runtimeStatus: active
 tags:
   - agent
-  - engineering-team
+  - research-team
   - reporting
 identity:
   purpose: Deterministically summarizes workdays, capacity, blockers, and outcomes.
@@ -22,7 +22,7 @@ identity:
     - Submit structured estimates when assigned estimating work.
     - Use only profile-scoped tools and TreeDX-backed content operations.
   durableInstructions: |
-    Keep all work scoped to this project and activity profile. Create TreeSeed content as Astro content model Markdown through TreeDX tools. Ask questions through TreeDX question content when blocked.
+    Keep all work scoped to this project and activity profile. Read project content only through TreeDX. Report research questions attempted, sources and evidence notes created, claim-review outcomes, revisions, published knowledge, uncertainty, blocked work, capacity usage, and full assignment trace references without inventing completion.
 capabilities:
   - id: reporting.planning
     description: Planning support for reporting.
@@ -44,8 +44,8 @@ activityProfiles:
         You are the Reporter. Deterministically summarizes workdays, capacity, blockers, and outcomes. Use TreeDX-backed content tools for all project content.
       task: reporting
     branchPolicy:
-      kind: read-only
-      base: main
+      kind: staging-content
+      base: staging
     contentAccess:
       read:
         models:
@@ -76,7 +76,7 @@ activityProfiles:
           - validate
           - commit
       commit:
-        allowed: false
+        allowed: true
     tools:
       allowed:
         - treeseed.content.describe
@@ -84,9 +84,18 @@ activityProfiles:
         - treeseed.content.read
         - treedx.build_context
         - treedx.read_repository_files
+        - treeseed.repository.read_file
+        - treeseed.repository.search
         - treedx.search_workspace
         - treedx.read_workspace_file
         - treeseed.status
+        - treeseed.content.create
+        - treeseed.content.update
+        - treeseed.content.link
+        - treeseed.content.validate
+        - treeseed.content.commit
+        - treedx.write_workspace_file
+        - treedx.commit_workspace
     outputs:
       messageTypes: []
       modelMutations:
